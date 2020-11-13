@@ -19,7 +19,7 @@ This library is used by [10Duke Identity and Entitlement React sample client](ht
 
 The example linked above gives a real-world example of how to use this client library. Examples of library usage for authentication are given below:
 
-```
+```ts
 import { Authenticator } from "@10duke/web-client-pkce";
 import { Authentication } from "@10duke/web-client-pkce";
 
@@ -62,14 +62,21 @@ async function startLogin(state?: string): Promise<void> {
  *     response from the server (optional, only included in the response if client
  *     specified state when starting login)
  */
-async function completeLogin(code: string, state: string): Promise<Authentication> {
+async function completeLogin(
+  code: string,
+  state: string
+): Promise<Authentication> {
   // Read the state stored when starting login
   const storedLoginState = localStorage.getItem("startLoginState");
   const startLoginState = JSON.parse(storedLoginState) as StartLoginResponse;
   localStorage.removeItem("startLoginState");
 
   // Complete authentication by exchanging the code to an access token and ID token
-  return await authenticator.completeAuthentication(startLoginState, code, state);
+  return await authenticator.completeAuthentication(
+    startLoginState,
+    code,
+    state
+  );
 }
 
 // completeLogin must be called with actual values read from the response URL.
@@ -86,7 +93,7 @@ const accessToken = authn.getAccessToken();
 
 The example linked above gives a real-world example of how to use this client library. Examples of library usage for licensing are given below:
 
-```
+```ts
 import { LicenseChecker } from "@10duke/web-client-pkce";
 import { LicenseCheckResult } from "@10duke/web-client-pkce";
 import { LicenseReleaseResult } from "@10duke/web-client-pkce";
@@ -108,7 +115,9 @@ const licenseChecker = new LicenseChecker(
  * @param licensedItem Name of licensed item to consume. Typically this is name of
  *    the client application or a licensed feature of the client application.
  */
-async function consumeLicense(licensedItem: string): Promise<LicenseCheckResult> {
+async function consumeLicense(
+  licensedItem: string
+): Promise<LicenseCheckResult> {
   return licenseChecker.consumeLicense(licensedItem);
 }
 
