@@ -1,10 +1,10 @@
-import AccessTokenResponse from "./AccessTokenResponse";
+import { AccessTokenResponse } from "./AccessTokenResponse";
 import { IdTokenFields } from "./userinfo";
 
 /**
  * Describes successful authentication status.
  */
-export default class Authentication {
+export class Authentication {
   /**
    * Access token response received from the server.
    */

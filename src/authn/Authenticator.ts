@@ -1,8 +1,8 @@
 import { Jose } from "jose-jwe-jws";
 import oidcTokenHash from "oidc-token-hash";
 
-import AccessTokenResponse from "./AccessTokenResponse";
-import Authentication from "./Authentication";
+import { AccessTokenResponse } from "./AccessTokenResponse";
+import { Authentication } from "./Authentication";
 import { generateRandomString } from "./random";
 import { IdTokenFields } from "./userinfo";
 
@@ -78,7 +78,7 @@ export class AuthenticationError extends Error {
  * Authenticator for handling client authentication against 10Duke server
  * using OpenID Connect Authorization Code Grant flow with PKCE.
  */
-export default class Authenticator {
+export class Authenticator {
   /**
    * Default OAuth / OpenID Connect scope.
    */

@@ -58,7 +58,7 @@ export class LicenseCheckError extends Error {
 /**
  * License checker for making license consumption requests.
  */
-export default class LicenseChecker {
+export class LicenseChecker {
   private accessToken: string;
   private authzUri: URL;
   private jwskUri: URL;

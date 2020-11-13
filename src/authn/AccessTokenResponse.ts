@@ -1,7 +1,7 @@
 /**
  * Response from access token endpoint of the identity provider.
  */
-export default interface AccessTokenResponse {
+export interface AccessTokenResponse {
   access_token: string;
   token_type: string;
   refresh_token?: string;
