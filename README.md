@@ -11,6 +11,12 @@ The client library currently covers basic use cases for license consumption and 
 
 The library uses the [Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) for HTTP requests.
 
+## Installation
+
+```
+npm i @10duke/web-client-pkce
+```
+
 ## Example
 
 This library is used by [10Duke Identity and Entitlement React sample client](https://github.com/10Duke/react-sample).
