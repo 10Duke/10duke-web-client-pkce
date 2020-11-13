@@ -6,13 +6,17 @@
     "build": "tsc",
     "lint:fix": "eslint src/*.ts --fix",
     "lint": "eslint src/**/*.ts",
-    "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
+    "format": "prettier --write \"src/**/*.ts\"",
     "clear-eslint-cache": "rm -rf node_modules/.cache/eslint-loader"
   },
   "repository": {
     "type": "git",
     "url": "git@github.com:10Duke/10duke-web-client-pkce.git"
   },
+  "files": [
+    "lib/**/*"
+  ],
+  "types": "lib/index.d.ts",
   "keywords": [
     "10Duke",
     "identity",
