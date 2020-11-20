@@ -1,9 +1,9 @@
 import { Jose } from "jose-jwe-jws";
-import oidcTokenHash from "oidc-token-hash";
 
 import { AccessTokenResponse } from "./AccessTokenResponse";
 import { Authentication } from "./Authentication";
 import { generateRandomString } from "./random";
+import { generateOidcTokenHash } from "./oidcTokenHash";
 import { IdTokenFields } from "./userinfo";
 
 import _debug from "debug";
@@ -209,7 +209,7 @@ export class Authenticator {
       responseJson.id_token,
       startLoginResponse
     );
-    this.validateAccessTokenHash(responseJson.access_token, idToken);
+    await this.validateAccessTokenHash(responseJson.access_token, idToken);
 
     return new Authentication(responseJson, idToken, state);
   }
@@ -247,11 +247,11 @@ export class Authenticator {
    * @param accessToken OAuth access token received from the server.
    * @param idToken ID token received from the server.
    */
-  private validateAccessTokenHash(
+  private async validateAccessTokenHash(
     accessToken: string,
     idToken: IdTokenFields
-  ): void {
-    const expectedHash = oidcTokenHash.generate(accessToken, "RS256");
+  ): Promise<void> {
+    const expectedHash = await generateOidcTokenHash(accessToken, "RS256");
     if (expectedHash !== idToken.at_hash) {
       throw new AuthenticationError(
         "invalid_access_token",
