@@ -1,6 +1,6 @@
 {
   "name": "@10duke/web-client-pkce",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "10Duke Identity and Entitlement client library for browser-based applications",
   "scripts": {
     "build": "tsc",
