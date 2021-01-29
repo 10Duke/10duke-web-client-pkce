@@ -12,6 +12,7 @@ The client library currently covers basic use cases for license consumption and 
 The library uses the [Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) for HTTP requests, and [SubtleCrypto of Web Crypto API](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto) for computing PKCE hashes.
 
 > :warning: **SubtleCrypto requires using secure context (HTTPS)**
+>
 > localhost is considered a secure context, but with other hosts HTTPS is required
 
 ## Installation
