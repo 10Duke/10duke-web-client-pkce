@@ -91,7 +91,7 @@ export class Authenticator {
 
   /**
    * ID token must not be issued in the future, but allow some leeway when checking iat.
-   * Leeway in seconds.
+   * Default leeway in seconds.
    */
   public static readonly ID_TOKEN_IAT_LEEWAY = 5;
 
@@ -102,6 +102,7 @@ export class Authenticator {
   private redirectUri: URL;
   private clientId: string;
   private scope: string;
+  private iatLeeway: number;
 
   /**
    * Initializes a new instance of the authenticator.
@@ -111,6 +112,7 @@ export class Authenticator {
    * @param jwksUri URL of identity provider endpoint for JWKS key service.
    * @param clientId OAuth client id used by this application when communicating with the IdP.
    * @param redirectUri OAuth redirect_uri for redirecting back to this application from the IdP.
+   * @param iatLeeway Allowed leeway when checking the iat (issued at) timestamp of ID token. The value is in seconds.
    */
   public constructor(
     authnUri: URL,
@@ -119,7 +121,8 @@ export class Authenticator {
     jwksUri: URL,
     clientId: string,
     redirectUri: URL,
-    scope: string = Authenticator.DEFAULT_SCOPE
+    scope: string = Authenticator.DEFAULT_SCOPE,
+    iatLeeway: number = Authenticator.ID_TOKEN_IAT_LEEWAY
   ) {
     this.authnUri = authnUri;
     this.tokenUri = tokenUri;
@@ -128,6 +131,7 @@ export class Authenticator {
     this.clientId = clientId;
     this.redirectUri = redirectUri;
     this.scope = scope;
+    this.iatLeeway = iatLeeway;
   }
 
   /**
@@ -300,7 +304,7 @@ export class Authenticator {
         `id token has expired, please check your clock`
       );
     }
-    if (idTokenFields.iat > epochSecsNow + Authenticator.ID_TOKEN_IAT_LEEWAY) {
+    if (idTokenFields.iat > epochSecsNow + this.iatLeeway) {
       throw new AuthenticationError(
         "id_token_issued_in_future",
         `id token issued timestamp is in the future, please check your clock`
