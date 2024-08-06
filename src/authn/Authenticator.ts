@@ -101,6 +101,7 @@ export class Authenticator {
   private jwskUri: URL;
   private redirectUri: URL;
   private clientId: string;
+  private clientSecret?: string;
   private scope: string;
   private iatLeeway: number;
 
@@ -113,6 +114,7 @@ export class Authenticator {
    * @param clientId OAuth client id used by this application when communicating with the IdP.
    * @param redirectUri OAuth redirect_uri for redirecting back to this application from the IdP.
    * @param iatLeeway Allowed leeway when checking the iat (issued at) timestamp of ID token. The value is in seconds.
+   * @param clientSecret OAuth client secret, if required by the IdP for client authentication.
    */
   public constructor(
     authnUri: URL,
@@ -122,7 +124,8 @@ export class Authenticator {
     clientId: string,
     redirectUri: URL,
     scope: string = Authenticator.DEFAULT_SCOPE,
-    iatLeeway: number = Authenticator.ID_TOKEN_IAT_LEEWAY
+    iatLeeway: number = Authenticator.ID_TOKEN_IAT_LEEWAY,
+    clientSecret?: string
   ) {
     this.authnUri = authnUri;
     this.tokenUri = tokenUri;
@@ -132,6 +135,7 @@ export class Authenticator {
     this.redirectUri = redirectUri;
     this.scope = scope;
     this.iatLeeway = iatLeeway;
+    this.clientSecret = clientSecret;
   }
 
   /**
@@ -199,6 +203,10 @@ export class Authenticator {
     formParams.append("code", code);
     formParams.append("redirect_uri", this.redirectUri.toString());
     formParams.append("code_verifier", startLoginResponse.codeVerifier);
+    if (this.clientSecret) {
+      formParams.append("client_secret", this.clientSecret);
+    }
+
     const response = await fetch(this.tokenUri.toString(), {
       method: "POST",
       cache: "no-cache",
